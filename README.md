@@ -1,18 +1,22 @@
-# LNbits-Telegram-Bot
+
+# **LNbits-Telegram-Bot**
+
 ---
 
 ## **Introduction**
+
 This project is a Telegram bot that interacts with **LNbits**, a platform for managing Lightning Network wallets. The bot provides the following functionalities:
 
 - Create Lightning Network invoices.
 - Pay invoices or LN addresses.
 - Check wallet balance.
-- Receive payment notifications using polling.
+- Receive payment notifications using **polling** or **webhooks**.
 - Generate and manage **LNURL-w** links for withdrawals.
 
 ---
 
 ## **Requirements**
+
 1. **Operating System**: Linux (Ubuntu 20.04+ recommended).
 2. **Python**: Version 3.10 or later.
 3. **Telegram**: Create a bot using BotFather and obtain the bot token.
@@ -21,7 +25,9 @@ This project is a Telegram bot that interacts with **LNbits**, a platform for ma
 ---
 
 ## **Dependencies**
-### Install Python and Required Modules
+
+### **Install Python and Required Modules**
+
 1. **Install Python**:
    ```bash
    sudo apt update && sudo apt install python3 python3-pip python3-venv -y
@@ -41,13 +47,16 @@ This project is a Telegram bot that interacts with **LNbits**, a platform for ma
 ---
 
 ## **Setting up LNbits**
-### API Keys
+
+### **API Keys**
+
 1. Go to **LNbits > Extensions > API**.
 2. Copy the following keys:
    - **Admin Key**: For full wallet access.
    - **Invoice Key**: For creating invoices.
 
-### LNURL-w (Withdraw Links)
+### **LNURL-w (Withdraw Links)**
+
 1. Enable the **Withdraw Links (LNURL-w)** extension in LNbits.
 2. Create a withdraw link:
    - Go to **Withdraw Links** in your wallet.
@@ -57,11 +66,32 @@ This project is a Telegram bot that interacts with **LNbits**, a platform for ma
      - **Max Uses**: Number of times the link can be used.
      - **Min/Max Withdrawable**: Define the amount range (in satoshis).
    - Save the link.
-3. Use the API or bot commands to manage LNURL-w links.
+
+---
+
+## **Webhook Configuration**
+
+LNbits can notify the bot of incoming payments in real-time using webhooks. Here's how to set it up:
+
+### **Step 1: Set Up the Webhook URL**
+
+1. Replace placeholders in this `curl` command:
+   ```bash
+   curl -X POST https://yourlnbitsinstance.com/api/v1/wallets/<wallet_id>/webhook \
+       -H "X-Api-Key: YOUR_ADMIN_KEY" \
+       -H "Content-Type: application/json" \
+       -d '{"url": "https://yourdomain.com/webhook/YOUR_TELEGRAM_BOT_TOKEN"}'
+   ```
+   - `<wallet_id>`: Found in your LNbits wallet details.
+   - `YOUR_ADMIN_KEY`: Your LNbits admin key.
+   - `https://yourdomain.com/webhook/YOUR_TELEGRAM_BOT_TOKEN`: Replace with your webhook endpoint.
+
+2. Verify webhook setup by monitoring your logs or testing with an invoice.
 
 ---
 
 ## **Bot Configuration**
+
 1. **Telegram Bot Token**: Obtain from BotFather.
 2. **LNbits URL**: Your LNbits instance URL (e.g., `https://yourlnbitsinstance.com`).
 3. **Chat ID**: Your Telegram user or group chat ID.
@@ -69,15 +99,18 @@ This project is a Telegram bot that interacts with **LNbits**, a platform for ma
 ---
 
 ## **Features**
+
 - **Create Invoices**: Generate invoices with specific amounts.
 - **Pay Invoices or LN Addresses**: Process payments.
 - **Check Wallet Balance**: Fetch wallet balance in satoshis.
-- **Receive Notifications**: Get real-time updates on incoming payments.
+- **Receive Notifications**: Get updates on incoming payments using polling or webhooks.
 - **Generate LNURL-w Links**: Create and manage withdraw links.
 
 ---
 
 ## **Bot Code**
+
+Here’s the complete Python script for the bot:
 
 ```python
 from flask import Flask, request
@@ -226,16 +259,22 @@ if __name__ == "__main__":
 ---
 
 ## **Usage Instructions**
+
 1. **Start the bot**:
    ```bash
    python3 bot.py
    ```
+
 2. **Bot Commands**:
    - `/start`: Start the bot.
-   - `/create_invoice <amount>`: Generate an invoice for the specified amount.
+   - `/create_invoice <amount>`:
+
+ Generate an invoice for the specified amount.
    - `/generate_lnurlw <amount> <uses>`: Create a withdraw link for the specified amount and uses.
    - `/wallet_balance`: Check the wallet balance.
 
+3. **Webhook Configuration**: Follow the steps to set up real-time payment notifications.
+
 ---
 
-Test the bot and feel free to contribute improvements! 🎉
+Now your bot is fully equipped to handle Lightning payments with both **polling** and **webhooks**. 🎉
