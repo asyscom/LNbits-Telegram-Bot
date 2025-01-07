@@ -44,7 +44,7 @@ This Telegram bot allows interaction with an LNbits wallet for:
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/asyscom/telegram-lnbits-bot.git
+   git clone https://github.com/asyscom/LNbits-Telegram-Bot.git
    cd telegram-lnbits-bot
    ```
 
